@@ -33,6 +33,9 @@ docker run -v "$(pwd)/Generated:/app/Generated" \
            -e "BTCPAYGEN_SUBNAME=$BTCPAYGEN_SUBNAME" \
            -e "BTCPAY_HOST_SSHAUTHORIZEDKEYS=$BTCPAY_HOST_SSHAUTHORIZEDKEYS" \
            -e "EPS_XPUB=$EPS_XPUB" \
+           -e "PSQL_UID=$PSQL_UID" \
+           -e "PSQL_HOST=$PSQL_HOST" \
+           -e "PSQL_PSW=$PSQL_PSW" \
            --rm $BTCPAYGEN_DOCKER_IMAGE
 
 if [ "$BTCPAYGEN_REVERSEPROXY" == "nginx" ]; then
