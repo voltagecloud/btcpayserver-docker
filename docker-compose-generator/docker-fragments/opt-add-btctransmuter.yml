@@ -6,7 +6,7 @@ services:
     image: btcpayserver/btctransmuter:0.0.59
     container_name: btctransmuter
     environment:
-      TRANSMUTER_Database: User ID=${PSQL_UID:-foo};Host=${PSQL_HOST:-postgres};Port=5432;Database=${PSQL_DBNAME:-btcpay0};Password=${PSQL_PSW:-foobarbaz}
+      TRANSMUTER_Database: User ID=${PSQL_UID:-foo};Host=${PSQL_HOST:-postgres};Port=5432;Database=${PSQL_DBNAME:-btcpay0}transmuter;Password=${PSQL_PSW:-foobarbaz}
       TRANSMUTER_DatabaseType: postgres
       TRANSMUTER_DataProtectionDir: data/keys
       TRANSMUTER_DataProtectionApplicationName: btctransmuter
