@@ -11,7 +11,7 @@ services:
       NBXPLORER_BIND: 0.0.0.0:32838
       NBXPLORER_TRIMEVENTS: 10000
       NBXPLORER_SIGNALFILESDIR: /datadir
-      NBXPLORER_POSTGRES: User ID=postgres;Host=postgres;Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=nbxplorer${NBITCOIN_NETWORK:-regtest}
+      NBXPLORER_POSTGRES: User ID=${PSQL_UID:-foo};Host=${PSQL_HOST:-postgres};Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=${PSQL_DBNAME:-btcpay0}nbxplorer;Password=${PSQL_PSW:-foobarbaz}
     links:
       - postgres
     volumes:
