@@ -9,8 +9,8 @@ services:
       - "49392"
     environment:
       # BTCPay settings
-      BTCPAY_POSTGRES: User ID=postgres;Host=postgres;Port=5432;Application Name=btcpayserver;Database=btcpayserver${NBITCOIN_NETWORK:-regtest}
-      BTCPAY_EXPLORERPOSTGRES: User ID=postgres;Host=postgres;Port=5432;Application Name=btcpayserver;MaxPoolSize=80;Database=nbxplorer${NBITCOIN_NETWORK:-regtest}
+      BTCPAY_POSTGRES: User ID=${PSQL_UID:-foo};Host=${PSQL_HOST:-postgres};Port=5432;Database=${PSQL_DBNAME:-btcpay0};Password=${PSQL_PSW:-foobarbaz}
+      BTCPAY_EXPLORERPOSTGRES: User ID=${PSQL_UID:-foo};Host=${PSQL_HOST:-postgres};Port=5432;Application Name=btcpayserver;MaxPoolSize=80;Database=nbxplorer${NBITCOIN_NETWORK:-regtest}
       BTCPAY_NETWORK: ${NBITCOIN_NETWORK:-regtest}
       BTCPAY_BIND: 0.0.0.0:49392
       BTCPAY_ROOTPATH: ${BTCPAY_ROOTPATH:-/}
@@ -21,12 +21,6 @@ services:
       BTCPAY_DEBUGLOG: btcpay.log
       BTCPAY_UPDATEURL: https://api.github.com/repos/btcpayserver/btcpayserver/releases/latest
       BTCPAY_DOCKERDEPLOYMENT: "true"
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.btcpayserver.rule: Host(`${BTCPAY_HOST}`)
-      # Traefic can not accept list from BTCPAY_ADDITIONAL_HOSTS, see Traefik/README.md
-    links:
-      - postgres
     volumes:
       - "btcpay_datadir:/datadir"
       - "nbxplorer_datadir:/root/.nbxplorer"
@@ -38,8 +32,15 @@ volumes:
   btcpay_pluginsdir:
 
 required:
-  - "postgres"
   - "nbxplorer"
   - "btcpayserver"
 recommended:
   - "opt-add-tor"
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet:  192.168.0.0/16
